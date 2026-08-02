@@ -1,22 +1,5 @@
 # Infralytix — Guide Briefing & Q&A Prep
 ### For tomorrow's project explanation / conference-application defense
-
----
-
-## 0. Fix These Tonight — Real Inconsistencies Found
-
-I compared your actual SRS v1.1 against the SDD. These are genuine mismatches — if your guide flips between the two documents, these are exactly what a sharp reviewer catches. Fix or at least have an answer ready for each:
-
-| # | SDD says | Real SRS says | What to do |
-|---|---|---|---|
-| 1 | Backend + Scheduler packaged in **one container**, spawn/IPC only | §7.2: "separate Docker services for frontend, **backend, scheduler (Python)**, and MySQL" — 4 containers | Say: "scheduler runs as its own container but is still invoked via local IPC/spawn across a shared mount, not a REST call" — OR just align the SDD to 4 containers. Pick one before tomorrow. |
-| 2 | DB has `vm_pools` (a grouping table) + `vms` | SRS has only `vms(id, user_id, name, mips, cost_per_1000mi)` — no pool concept at all | Drop `vm_pools` from your mental model — VMs belong directly to a user in the actual spec. |
-| 3 | DB has separate `runs`, `assignments`, `metrics` tables | SRS has `schedule_runs` (metrics as columns directly on it: makespan, avg_waiting_time, utilization_pct, idleness_cost) + `task_assignments` | Know the SRS's actual field names cold — that's what you'll be quizzed against. |
-| 4 | API: `POST /api/workflows/:id/schedule`, `GET /api/runs/:id` | SRS: `POST /api/schedule/run` (body has `workflowId`), `GET /api/schedule/runs/:id`, `GET /api/schedule/runs/:id/compare` | Use the SRS's endpoint names if asked — they're the authoritative ones. |
-| 5 | No refresh-token design; simple role enum | SRS §3.1 (v1.1 additions FR-AUTH-6, FR-AUTH-7): refresh token **with rotation**, dedicated `refresh_tokens` table, Evaluator role is **read-only across all users** | Be ready to explain refresh-token rotation in one sentence (below, §3). |
-| 6 | Scheduler chapter focuses almost entirely on the Advanced algorithm | SRS FR-SCH-6 requires **4 algorithms** implemented and comparable: Advanced, classical Max–Min, Min–Min, SJF, with a comparison dashboard (FR-DASH-4) | Don't undersell this in your explanation — "4 algorithms, one comparison view" is a real feature, mention it explicitly. |
-| 7 | **Biggest one:** SDD/Playbook talk about "CCOA" — multi-cloud cost comparison, explainability, budget-aware planning — as the project's core contribution | The actual SRS **does not mention any of this**. No multi-cloud, no explainability, no budget mode anywhere in FR-* or §7.3 (future scope only lists "real cloud-provider pricing APIs" as a *future* improvement) | **See §4 below — this is the single most important thing to resolve before you try to "sell" this for a conference.** |
-
 ---
 
 ## 1. The 60-Second Pitch (lead with this)
