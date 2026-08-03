@@ -3,7 +3,7 @@
 
 ---
 
-## 0. Fix These Tonight — Real Inconsistencies Found
+## 0. Fix These Tonight — Real Inconsistencies found
 
 I compared your actual SRS v1.1 against the SDD. These are genuine mismatches — if your guide flips between the two documents, these are exactly what a sharp reviewer catches. Fix or at least have an answer ready for each:
 
