@@ -8,7 +8,7 @@
 I compared your actual SRS v1.1 against the SDD. These are genuine mismatches — if your guide flips between the two documents, these are exactly what a sharp reviewer catches. Fix or at least have an answer ready for each:
 
 | # | SDD says | Real SRS says | What to do |
-|---|---|---|---|
+|---|---|---|---|---|---|
 | 1 | Backend + Scheduler packaged in **one container**, spawn/IPC only | §7.2: "separate Docker services for frontend, **backend, scheduler (Python)**, and MySQL" — 4 containers | Say: "scheduler runs as its own container but is still invoked via local IPC/spawn across a shared mount, not a REST call" — OR just align the SDD to 4 containers. Pick one before tomorrow. |
 | 2 | DB has `vm_pools` (a grouping table) + `vms` | SRS has only `vms(id, user_id, name, mips, cost_per_1000mi)` — no pool concept at all | Drop `vm_pools` from your mental model — VMs belong directly to a user in the actual spec. |
 | 3 | DB has separate `runs`, `assignments`, `metrics` tables | SRS has `schedule_runs` (metrics as columns directly on it: makespan, avg_waiting_time, utilization_pct, idleness_cost) + `task_assignments` | Know the SRS's actual field names cold — that's what you'll be quizzed against. |
